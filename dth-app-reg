@@ -1,0 +1,20 @@
+title DTH App Registration
+
+actor User
+User->A DWP Service: Goes to sign-in page
+A DWP Service->DTH: Request authentication
+note right of DTH: User presetned with auth options, downloads app
+User's Mobile App->DTH: Scan QR code
+DTH->+User's Mobile App: Trigger IDV process
+User's Mobile App->User's Mobile App: Document and face scan
+User's Mobile App->-DTH: User identifiers passed to DTH
+
+alt
+note right of DTH: User's app registered to existing DTH user profile
+else 
+DTH->CIS: Else new user matched to CIS
+end
+DTH->A DWP Service: ID and Access Tokens
+A DWP Service->+DTH: Access user info
+note right of DTH: Tokens validated
+DTH->-A DWP Service: User data returned

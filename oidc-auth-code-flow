@@ -1,0 +1,20 @@
+# 
+title OIDC Authorization Code Flow
+participant End User
+participant OP WebApp
+participant Relying Party
+participant OpenID Provider
+End User->+Relying Party: Clicks on login button on RP website
+Relying Party ->+OpenID Provider: Request to Authorization Endpoint with client_id and redirect_uri etc.
+OpenID Provider->+OP WebApp: Redirect to authentication workflow
+OP WebApp->End User: Prompt for credentials
+End User->OP WebApp: Enter Credentials
+OP WebApp->-OpenID Provider: Submit Credentials
+OpenID Provider->OpenID Provider: Validate credentials
+OpenID Provider->Relying Party: Redirect to RP with Authorization Code
+Relying Party->Relying Party: Extract Authorization Code from URI
+Relying Party->OpenID Provider: Request to Token Endpoint with Authorization Code to obtain ID and Access Tokens
+Relying Party->Relying Party: Validation of recieved tokens
+Relying Party->OpenID Provider: Request additional claims from UserInfo Endpoint, if needed
+OpenID Provider->Relying Party: Return additional claims
+Relying Party->End User: Authenticated user can continue user journey 
